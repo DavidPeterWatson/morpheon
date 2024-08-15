@@ -1,0 +1,10 @@
+design:
+  aerodynamics:
+    max-speed: 50 # meters per second
+    min-speed: 5 # meters per second
+    max-g-force: 20
+    min-altitude: 0 # meters
+    max-altitude: 500 # meters
+    max-payload: 1 # kilograms
+    max-net-weight: 2 # kilograms
+    max-root-chord: 0.4 # meters
