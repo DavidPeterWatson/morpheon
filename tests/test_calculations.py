@@ -29,8 +29,13 @@ def test_aspect_ratio_calculation():
 def test_taper_ratio_calculation():
     root_chord = 2
     tip_chord = 1
-    aspect_ratio = aerodynamic_calculations.calculate_taper_ratio(root_chord, tip_chord)
-    assert aspect_ratio == 0.5
+    taper_ratio = aerodynamic_calculations.calculate_taper_ratio(root_chord, tip_chord)
+    assert taper_ratio == 0.5
+
+
+def test_ideal_taper_ratio_calculation():
+    taper_ratio = aerodynamic_calculations.calculate_ideal_taper_ratio()
+    assert taper_ratio == 0.4
 
 # def test_tip_chord_length_calculation():
 #     root_chord_length = 400
