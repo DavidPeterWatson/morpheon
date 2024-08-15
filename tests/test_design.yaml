@@ -8,3 +8,5 @@ design:
     max-payload: 1 # kilograms
     max-net-weight: 2 # kilograms
     root-chord: 0.4 # meters
+    nuetral_point: 0.4
+    center_of_gravity: 0.3

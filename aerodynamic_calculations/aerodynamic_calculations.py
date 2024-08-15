@@ -1,8 +1,9 @@
 import math
 
 
-def calculate_aspect_ratio(wingspan, area):
-    return wingspan * wingspan / area
+def calculate_aspect_ratio(wingspan, root_chord, tip_chord):
+    area = (root_chord + tip_chord) / 2 * wingspan
+    return pow(wingspan, 2) / area
 
 
 def calculate_taper_ratio(root_chord, tip_chord):
@@ -26,7 +27,29 @@ def calculate_mean_aerodynamic_chord_distance(wingspan, root_chord, mean_aerodyn
     return wingspan / 2 * (root_chord - mean_aerodynamic_chord) / (root_chord - tip_chord)
 
 
-def calculate_sweep(nuetral_point, mean_aerodynamic_chord_distance, mean_aerodynamic_chord):
+def calculate_sweep_angle(nuetral_point, mean_aerodynamic_chord_distance, mean_aerodynamic_chord):
     mean_chord_leading_edge_point = nuetral_point - 1 / 4 * mean_aerodynamic_chord
     return math.atan(mean_chord_leading_edge_point / mean_aerodynamic_chord_distance)
+
+
+def calculate_sweep_distance(wingspan, sweep_angle):
+    return math.tan(sweep_angle) * wingspan / 2 
     
+
+def calculate_center_of_gravity(nuetral_point, static_margin):
+    return nuetral_point * 0.9 - nuetral_point * static_margin
+
+
+def calculate_wing_area(wingspan, root_chord, tip_chord):
+    return (root_chord + tip_chord) / 2 * wingspan
+
+
+def calculate_wing_loading(gross_weight, wing_area):
+    return gross_weight / wing_area
+
+
+def calculate_lift(coefficient_of_lift, wing_area, density, velocity):
+    return coefficient_of_lift * wing_area * 0.5 * density * pow(velocity, 2)
+
+def calculate_velocity(coefficient_of_lift, wing_area, density, lift):
+    return math.sqrt(lift * 2 / density / wing_area / coefficient_of_lift)

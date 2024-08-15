@@ -103,3 +103,9 @@ git clone https://github.com/usuaero/MachUp
 
 References:
 - https://www.mh-aerotools.de/airfoils/flywing1.htm
+- https://ijettjournal.org/assets/year/2018/volume-59/number-4/IJETT-V59P233.pdf
+- https://dergipark.org.tr/tr/download/article-file/629766
+- https://www.ecalc.ch/wingdesigner.htm#:~:text=Flying%20Wings%3A%20The%20CG%20is,stability%20and%20use%20resulting%20CG.
+- https://www.nestofdragons.net/weird-airplanes/flying-wings/flying-wing-designer/
+- https://apmonitor.com/me575/uploads/Main/2013_Flying_Wing.pdf
+- https://ijettjournal.org/assets/year/2018/volume-59/number-4/IJETT-V59P233.pdf

@@ -21,13 +21,13 @@ def test_design():
 
 def test_aspect_ratio_calculation():
     # given
-    wingspan = 10
-    chord = 2
-    area = chord * wingspan
+    wingspan = 600
+    root_chord = 110
+    tip_chord = 60
     # when
-    aspect_ratio = aerodynamic_calculations.calculate_aspect_ratio(wingspan, area)
+    aspect_ratio = aerodynamic_calculations.calculate_aspect_ratio(wingspan, root_chord, tip_chord)
     # then
-    assert aspect_ratio == 5
+    assert round(aspect_ratio, 4) == 7.0588
 
 
 def test_taper_ratio_calculation():
@@ -52,9 +52,9 @@ def test_tip_chord_calculation():
     root_chord = 400
     taper_ratio = 0.4
     # when
-    tip_chord_length = aerodynamic_calculations.calculate_tip_chord(root_chord, taper_ratio)
+    tip_chord = aerodynamic_calculations.calculate_tip_chord(root_chord, taper_ratio)
     # then
-    assert tip_chord_length == 160
+    assert tip_chord == 160
 
 
 def test_calculate_mean_aerodynamic_chord():
@@ -76,13 +76,74 @@ def test_calculate_mean_aerodynamic_chord_distance():
 
 def test_calculate_sweep():
     mean_aerodynamic_chord = 87.451
-    desired_nuetral_point = 120
+    nuetral_point = 120
     mean_aerodynamic_chord_distance = 135.294
-    sweep = aerodynamic_calculations.calculate_sweep(desired_nuetral_point, mean_aerodynamic_chord_distance, mean_aerodynamic_chord)
-    assert round(sweep, 5) == 0.62755
+    sweep_angle = aerodynamic_calculations.calculate_sweep(nuetral_point, mean_aerodynamic_chord_distance, mean_aerodynamic_chord)
+    assert round(sweep_angle, 5) == 0.62755
 
 
-# def test_aerodynamic_sweep_calculation():
-#     sweep = aerodynamic_calculations.calculate_sweep(root_chord_length, wing_span, nuetral_point)
+def test_calculate_sweep_distance():
+    wingspan = 600
+    sweep_angle =  0.62755
+    sweep_distance = aerodynamic_calculations.calculate_sweep_distance(wingspan, sweep_angle)
+    assert round(sweep_distance, 3) == 217.611
 
-# https://dergipark.org.tr/tr/download/article-file/629766
+
+def test_calculate_center_of_gravity():
+    nuetral_point = 0.24571
+    static_margin = 0.1
+    center_of_gravity = aerodynamic_calculations.calculate_center_of_gravity(nuetral_point, static_margin)
+    assert center_of_gravity == 0.196568
+
+
+def test_calculate_wing_area():
+    wingspan = 1.2
+    root_chord = 0.4
+    tip_chord = 0.16
+    wing_area = aerodynamic_calculations.calculate_wing_area(wingspan, root_chord, tip_chord)
+    assert round(wing_area, 3) == 0.336
+
+
+def test_calculate_wing_loading():
+    wing_area = 0.336
+    gross_weight = 3
+    wing_loading = aerodynamic_calculations.calculate_wing_loading(gross_weight, wing_area)
+    assert wing_loading == 5
+
+
+def test_calculate_lift():
+    coefficient_of_lift = 0.5
+    wing_area = 0.336
+    density = 1.204
+    velocity = 20
+    lift = aerodynamic_calculations.calculate_lift(coefficient_of_lift, wing_area, density, velocity)
+    assert lift == 40.4544 # Newtons
+
+def test_calculate_velocity():
+    coefficient_of_lift = 0.5
+    wing_area = 0.336
+    density = 1.204
+    lift = 30
+    velocity = aerodynamic_calculations.calculate_velocity(coefficient_of_lift, wing_area, density, lift)
+    assert round(velocity, 3) == 17.223 # meters per second
+
+
+def test_design():
+    wingspan = 1.2
+    root_chord = 0.4
+    area = root_chord * wingspan
+    nuetral_point = root_chord
+    static_margin = 0.1
+    aspect_ratio = aerodynamic_calculations.calculate_aspect_ratio(wingspan, area)
+    taper_ratio = aerodynamic_calculations.calculate_ideal_taper_ratio()
+    tip_chord = aerodynamic_calculations.calculate_tip_chord(root_chord, taper_ratio)
+    mean_aerodynamic_chord = aerodynamic_calculations.calculate_mean_aerodynamic_chord(root_chord, taper_ratio)
+    mean_aerodynamic_chord_distance = aerodynamic_calculations.calculate_mean_aerodynamic_chord_distance(wingspan, root_chord, mean_aerodynamic_chord, tip_chord)
+    sweep_angle = aerodynamic_calculations.calculate_sweep(nuetral_point, mean_aerodynamic_chord_distance, mean_aerodynamic_chord)
+    center_of_gravity = aerodynamic_calculations.calculate_center_of_gravity(nuetral_point, static_margin)
+    take_off_flight_profile = {
+        'angle_of_attack': 10,
+        'speed': 20
+    }
+
+    lift = aerodynamic_calculations.calculate_lift()
