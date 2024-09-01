@@ -38,13 +38,26 @@ Calculate Weight
 Calculate stability https://www.mh-aerotools.de/airfoils/flywing1.htm
 List flight profiles
 - Take off
-- Top seed straight
+    - low speed
+    - low reynolds
+    - High alpha stall at low reynolds
+    - High Cl at low reynolds
+    - Drag is not important
+    - Cl is way more important than drag
+- Top speed straight cruising high efficient long distance
+    - high speed
+    - low drag
+    - higher reynolds number
+    - optimise for low drag
 - Acrobatic manouvre at max g's
 For each flight profile
 - Calculate wing loading
 - Calculate Reynolds number
 - Find airfoils that produce the required lift
     Use a bell curve lift distribution
+    - Use laminar for high speed
+    - Use turbulent for low speed
+    - use nueral foil to determine airfoil https://github.com/peterdsharpe/NeuralFoil
 - Calculate drag at that speed
 - Calculate required thrust
 Morphing foil dimensions

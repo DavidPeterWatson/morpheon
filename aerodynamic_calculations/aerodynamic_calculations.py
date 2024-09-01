@@ -51,5 +51,65 @@ def calculate_wing_loading(gross_weight, wing_area):
 def calculate_lift(coefficient_of_lift, wing_area, density, velocity):
     return coefficient_of_lift * wing_area * 0.5 * density * pow(velocity, 2)
 
+
 def calculate_velocity(coefficient_of_lift, wing_area, density, lift):
     return math.sqrt(lift * 2 / density / wing_area / coefficient_of_lift)
+
+
+def calculate_reynolds_number(velocity, chord, kinematic_viscosity):
+    return int(round(velocity * chord / kinematic_viscosity, 0))
+
+
+def calculate_lift_coefficient(lift, wing_area, density, velocity):
+    return 2 * lift / (wing_area * density * pow(velocity, 2))
+
+
+def calculate_oswald_efficiency_number(aspect_ratio):
+    return 1.78 * (1 - 0.045 * pow(aspect_ratio, 0.68)) - 0.64
+
+
+def calculate_induced_drag_coefficient(lift_coefficient, aspect_ratio, oswald_efficiency_number):
+    return pow(lift_coefficient, 2) / (math.pi * aspect_ratio * oswald_efficiency_number)
+
+
+def calculate_induced_drag(lift, density, velocity, wingspan):
+    return pow(lift, 2) / (0.5 * density * pow(velocity, 2) * math.pi  * pow(wingspan, 2))
+
+# optimises for max lift and good stall characteristics
+def select_max_lift_good_stall_airfoil(lift_coefficient, reynolds_number):
+    return 'NACA 2418'
+    
+
+# optimises for max lift and good stall characteristics
+def select_lowest_drag_airfoil(lift_coefficient, reynolds_number, lowest_thickness):
+    return 'NACA 63A010'
+
+
+def calculate_angle_of_attack(airfoil, reynolds_number, lift_coefficient):
+    airfoil_data = {
+        'NACA 2418': {
+            '317649' : {
+                '1.029966250065918': 7
+            },
+            '127060' : {
+                '1.029966250065918': 7
+            }
+        },
+        'NACA 63A010': {
+            '1058831' : {
+                '0.09269696250593261': 1
+            },
+            '423533' : {
+                '0.09269696250593261': 1
+            } 
+        },
+        'NACA 64-008A': {
+            '1058831' : {
+                '0.017453292519943295': 1
+            },
+            '423533' : {
+                '0.017453292519943295': 1
+            } 
+        }
+    }
+    return airfoil_data[airfoil][str(reynolds_number)][str(lift_coefficient)]
